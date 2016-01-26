@@ -16,19 +16,21 @@
 	</head>
 
 	<body>
+		<canvas id="tools_sketch" class="canvas" style="min-width:200px; min-height:200px; cursor:default;" width="600" height="500"></canvas>
+
 		<script src="js/three.js"></script>
 		<script src="js/OBJLoader.js"></script>
 
 		<script>
 
-			var container;
+			var canvas = document.getElementById("tools_sketch");
 
 			var camera, scene, renderer;
 
 			var mouseX = 0, mouseY = 0;
 
-			var windowHalfX = window.innerWidth / 2;
-			var windowHalfY = window.innerHeight / 2;
+			var centerX = canvas.width / 2;
+			var centerY = canvas.height / 2;
 
 
 			init();
@@ -36,12 +38,8 @@
 
 
 			function init() {
-
-				container = document.createElement( 'div' );
-				document.body.appendChild( container );
-
-				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
-				camera.position.z = 100;
+				camera = new THREE.PerspectiveCamera( 45, canvas.width / canvas.height, 1, 2000 );
+				camera.position.z = 200;
 
 				// scene
 
@@ -106,10 +104,9 @@
 
 				//
 
-				renderer = new THREE.WebGLRenderer();
+				renderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true});
 				renderer.setPixelRatio( window.devicePixelRatio );
-				renderer.setSize( window.innerWidth, window.innerHeight );
-				container.appendChild( renderer.domElement );
+				renderer.setSize(canvas.width, canvas.height);
 
 				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 
@@ -121,20 +118,20 @@
 
 			function onWindowResize() {
 
-				windowHalfX = window.innerWidth / 2;
-				windowHalfY = window.innerHeight / 2;
+				centerX = canvas.width / 2;
+				centerY = canvas.height / 2;
 
-				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.aspect = canvas.width / canvas.height;
 				camera.updateProjectionMatrix();
 
-				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.setSize(canvas.width, canvas.height);
 
 			}
 
 			function onDocumentMouseMove( event ) {
 
-				mouseX = ( event.clientX - windowHalfX ) / 2;
-				mouseY = ( event.clientY - windowHalfY ) / 2;
+				mouseX = ( event.clientX - centerX ) / 2;
+				mouseY = ( event.clientY - centerY ) / 2;
 
 			}
 
@@ -149,8 +146,8 @@
 
 			function render() {
 
-				camera.position.x += ( mouseX - camera.position.x ) * .1;
-				camera.position.y += ( - mouseY - camera.position.y ) * .1;
+				camera.position.x += ( mouseX - camera.position.x ) * 1;
+				camera.position.y += ( - mouseY - camera.position.y ) * 1;
 
 				camera.lookAt( scene.position );
 

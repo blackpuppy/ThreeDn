@@ -85,7 +85,7 @@
 				// model
 
 				var loader = new THREE.OBJLoader( manager );
-				loader.load( 'Furniture.obj', function ( object ) {
+				loader.load( 'female02.obj', function ( object ) {
 
 					object.traverse( function ( child ) {
 
@@ -121,7 +121,7 @@
 				centerX = canvas.width / 2;
 				centerY = canvas.height / 2;
 
-				camera.aspect = canvas.width / canvas.height;
+				camera.aspect = window.innerWidth / window.innerHeight;
 				camera.updateProjectionMatrix();
 
 				renderer.setSize(canvas.width, canvas.height);
